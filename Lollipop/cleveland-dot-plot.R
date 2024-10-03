@@ -194,6 +194,8 @@ p2 <- ggplot(dat_long_pivot) +
     ),
     color = lg,
     size = 3) +
+  # line dark grey on 0
+  geom_hline(yintercept = 0, color = dg, size = 0.5) +
   geom_point(
     aes(
       x = country,
@@ -201,7 +203,7 @@ p2 <- ggplot(dat_long_pivot) +
       size = 4
     ),
     color = diff_col) +
-  scale_y_continuous(breaks = seq(0, 100, 5)) +
+  scale_y_continuous(breaks = seq(-100, 100, 5)) +
   coord_flip() +
   labs(
     x = NULL,
