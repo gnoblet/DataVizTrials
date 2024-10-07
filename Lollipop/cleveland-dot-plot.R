@@ -12,17 +12,17 @@ box::use(
 # Prepare dataset
 dat <- tibble(
   hoh_gender = c("male", "female"),
-  ukr = sample(seq(0, 100,by = 1), 2, replace = TRUE),
-  ner = sample(seq(0, 100,by = 1), 2, replace = TRUE),
-  mmr = sample(seq(0, 100,by = 1), 2, replace = TRUE),
-  mli = sample(seq(0, 100,by = 1), 2, replace = TRUE),
-  lbn = sample(seq(0, 100,by = 1), 2, replace = TRUE),
-  ken = sample(seq(0, 100,by = 1), 2, replace = TRUE),
-  hti = sample(seq(0, 100,by = 1), 2, replace = TRUE),
-  drc = sample(seq(0, 100,by = 1), 2, replace = TRUE),
-  car = sample(seq(0, 100,by = 1), 2, replace = TRUE),
-  bfa = sample(seq(0, 100,by = 1), 2, replace = TRUE),
-  bgd = sample(seq(0, 100,by = 1), 2, replace = TRUE),
+  ukr = sample(seq(10, 80, by = 1), 2, replace = TRUE),
+  ner = sample(seq(10, 80, by = 1), 2, replace = TRUE),
+  mmr = sample(seq(10, 80, by = 1), 2, replace = TRUE),
+  mli = sample(seq(10, 80, by = 1), 2, replace = TRUE),
+  lbn = sample(seq(10, 80, by = 1), 2, replace = TRUE),
+  ken = sample(seq(10, 80, by = 1), 2, replace = TRUE),
+  hti = sample(seq(10, 80, by = 1), 2, replace = TRUE),
+  drc = sample(seq(10, 80, by = 1), 2, replace = TRUE),
+  car = sample(seq(10, 80, by = 1), 2, replace = TRUE),
+  bfa = sample(seq(10, 80, by = 1), 2, replace = TRUE),
+  bgd = sample(seq(10, 80, by = 1), 2, replace = TRUE),
 )
 
 # Prepare named vector of country names
@@ -77,9 +77,10 @@ dat_long_pivot <- dat_long_pivot |>
 # Reorder data by values for females hoh_gender using fct reorder
 dat_long_pivot <- dat_long_pivot |>
   mutate(
+    max = pmax(female, male, na.rm = TRUE),
     country = fct_reorder(
       country,
-      female,
+      max,
       .desc = FALSE
     )
   )
@@ -118,7 +119,7 @@ p1 <- ggplot(dat_long_pivot) +
     ),
     size = 4) +
   # Add breaks every 10 percents
-  scale_y_continuous(breaks = seq(0, 100, 10)) +
+  scale_y_continuous(breaks = seq(10, 80, 10)) +
   # Manual legend for both points, with legend title being "gender of the head of households
   scale_color_manual(
     values = c(female_col, male_col),
@@ -173,6 +174,11 @@ dat_long_pivot <- dat_long_pivot |>
     )
   )
 
+
+# Get max to min diff range
+range <- abs(min(dat_long_pivot$diff)) + abs(max(dat_long_pivot$diff))
+range_lgl <- if (range >= 60) 10 else 5
+
 # Plot 2: lollipop plot showing the % difference, ref point = 0
 p2 <- ggplot(dat_long_pivot) +
   geom_segment(
@@ -193,7 +199,7 @@ p2 <- ggplot(dat_long_pivot) +
       size = 4
     ),
     color = diff_col) +
-  scale_y_continuous(breaks = seq(-100, 100, 5)) +
+  scale_y_continuous(breaks = seq(-100, 100, range_lgl)) +
   coord_flip() +
   labs(
     x = NULL,
