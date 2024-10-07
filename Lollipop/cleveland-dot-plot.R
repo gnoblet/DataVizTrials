@@ -22,8 +22,7 @@ dat <- tibble(
   drc = sample(seq(0, 100,by = 1), 2, replace = TRUE),
   car = sample(seq(0, 100,by = 1), 2, replace = TRUE),
   bfa = sample(seq(0, 100,by = 1), 2, replace = TRUE),
-  bgd_ref = sample(seq(0, 100,by = 1), 2, replace = TRUE),
-  bgd_hosts = sample(seq(0, 100,by = 1), 2, replace = TRUE),
+  bgd = sample(seq(0, 100,by = 1), 2, replace = TRUE),
 )
 
 # Prepare named vector of country names
@@ -38,7 +37,7 @@ country_names <- c(
   drc = "DRC",
   car = "CAR",
   bfa = "Burkina Faso",
-  bgd_ref = "Bangladesh"
+  bgd = "Bangladesh"
 )
 
 # Revert names and countries
