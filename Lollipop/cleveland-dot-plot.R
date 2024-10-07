@@ -184,7 +184,7 @@ p2 <- ggplot(dat_long_pivot) +
       yend = 0
     ),
     color = lg,
-    size = 3) +
+    linewidth = 3) +
   # line dark grey on 0
   geom_hline(yintercept = 0, color = dg, size = 0.5) +
   geom_point(
