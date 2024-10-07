@@ -12,42 +12,33 @@ box::use(
 # Prepare dataset
 dat <- tibble(
   hoh_gender = c("male", "female"),
-  ukr_camps = c(1, 1),
-  ukr = c(2 ,2),
-  ner = c(20, 27),
-  mmr = c(1, 2),
-  mli = c(6, 11),
-  lbn_plr = c(4, 9),
-  lbn_lbn = c(5, 7),
-  lbn_mig = c(12, 4),
-  ken = c(35, 51),
-  hti_pap = c(51, 62),
-  hti_rest = c(50, 56),
-  drc = c(36, 47),
-  car = c(48, 51),
-  bfa = c(8, 16),
-  bgd_ref = c(4, 9),
-  bgd_hosts = c(1, 3)
+  ukr = sample(seq(0, 100,by = 1), 2, replace = TRUE),
+  ner = sample(seq(0, 100,by = 1), 2, replace = TRUE),
+  mmr = sample(seq(0, 100,by = 1), 2, replace = TRUE),
+  mli = sample(seq(0, 100,by = 1), 2, replace = TRUE),
+  lbn = sample(seq(0, 100,by = 1), 2, replace = TRUE),
+  ken = sample(seq(0, 100,by = 1), 2, replace = TRUE),
+  hti = sample(seq(0, 100,by = 1), 2, replace = TRUE),
+  drc = sample(seq(0, 100,by = 1), 2, replace = TRUE),
+  car = sample(seq(0, 100,by = 1), 2, replace = TRUE),
+  bfa = sample(seq(0, 100,by = 1), 2, replace = TRUE),
+  bgd_ref = sample(seq(0, 100,by = 1), 2, replace = TRUE),
+  bgd_hosts = sample(seq(0, 100,by = 1), 2, replace = TRUE),
 )
 
 # Prepare named vector of country names
 country_names <- c(
-  ukr_camps = "Ukraine - Camps",
   ukr = "Ukraine",
   ner = "Niger",
   mmr = "Myanmar",
   mli = "Mali",
-  lbn_plr = "Lebanon - Palestinian refugees",
-  lbn_lbn = "Lebanon - Lebanese",
-  lbn_mig = "Lebanon - Migrants",
+  lbn = "Lebanon",
   ken = "Kenya",
-  hti_pap = "Haiti - Port-au-Prince",
-  hti_rest = "Haiti - Rest of the country",
+  hti = "Haiti",
   drc = "DRC",
   car = "CAR",
   bfa = "Burkina Faso",
-  bgd_ref = "Bangladesh - Refugees",
-  bgd_hosts = "Bangladesh - Hosts"
+  bgd_ref = "Bangladesh"
 )
 
 # Revert names and countries
@@ -118,7 +109,7 @@ p1 <- ggplot(dat_long_pivot) +
       yend = male
     ),
     color = lg,
-    size = 3) +
+    linewidth = 3) +
   geom_point(
     data = dat_long,
     aes(
